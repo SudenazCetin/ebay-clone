@@ -1,12 +1,13 @@
+<!-- src/pages/CategoryPage.vue -->
 <script setup>
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { products } from '@/data/products' // sende farklıysa ona göre düzelt
+import { products } from '@/data/products'
 
 const route = useRoute()
 const router = useRouter()
 
-// Soldaki "Shop by category" menüsü
+// Sol menüdeki kategoriler
 const categories = [
   { id: 'car-truck-parts', label: 'Car & Truck Parts & Accessories' },
   { id: 'accessory-belts', label: 'Accessory Belts' },
@@ -20,21 +21,30 @@ const categories = [
   { id: 'exhaust', label: 'Exhaust & Emission Systems' },
   { id: 'exterior', label: 'Exterior Parts & Accessories' },
   { id: 'ignition', label: 'Ignition Systems & Components' },
-  { id: 'interior', label: 'Interior Parts & Accessories' }
+  { id: 'interior', label: 'Interior Parts & Accessories' },
 ]
 
+// URL’deki id’ye göre aktif kategori
 const currentCategory = computed(() => {
   return (
-    categories.find(c => c.id === route.params.id) ||
+    categories.find((c) => c.id === route.params.id) ||
     categories[0]
   )
 })
 
-// Şimdilik demo: ürünlerin categoryId'si eşleşiyorsa filtrele
+// Best selling ürünler
+// Eğer ileride ürünlere categoryId eklersen onu da kullanır,
+// şimdilik yoksa direkt ilk 8 ürünü gösterir
 const bestSelling = computed(() => {
-  return products
-    .filter(p => p.categoryId === currentCategory.value.id)
-    .slice(0, 8)
+  let list = products.filter(
+    (p) => p.categoryId === currentCategory.value.id
+  )
+
+  if (!list.length) {
+    list = products.slice(0, 8)
+  }
+
+  return list
 })
 
 function goCategory(id) {
@@ -45,8 +55,7 @@ function goCategory(id) {
 <template>
   <div class="bg-white">
     <div class="max-w-[1350px] mx-auto px-4 py-6">
-
-      <!-- Breadcrumb (istersen sonra gerçek yaparız) -->
+      <!-- Breadcrumb -->
       <nav class="text-xs text-gray-500 mb-3">
         eBay &gt; eBay Motors &gt; Parts &amp; Accessories &gt;
         <span class="font-semibold text-black">
@@ -60,23 +69,22 @@ function goCategory(id) {
       </h1>
 
       <div class="grid grid-cols-[260px,1fr] gap-6">
-
         <!-- SOL: Shop by category -->
         <aside>
           <h2 class="text-sm font-semibold mb-3">Shop by category</h2>
           <ul class="text-sm space-y-1">
-            <li class="font-semibold mb-2 cursor-pointer"
-                @click="goCategory('parts-accessories')">
+            <li
+              class="font-semibold mb-2 cursor-pointer"
+              @click="goCategory('parts-accessories')"
+            >
               Parts &amp; Accessories
             </li>
 
             <li v-for="cat in categories" :key="cat.id">
               <button
-                class="w-full text-left py-1 px-1 rounded
-                       hover:bg-gray-100"
+                class="w-full text-left py-1 px-1 rounded hover:bg-gray-100"
                 :class="{
-                  'font-semibold text-black':
-                    cat.id === currentCategory.id,
+                  'font-semibold text-black': cat.id === currentCategory.id,
                   'text-gray-700': cat.id !== currentCategory.id
                 }"
                 @click="goCategory(cat.id)"
@@ -89,7 +97,7 @@ function goCategory(id) {
 
         <!-- SAĞ: Hero banner + Best selling -->
         <main>
-          <!-- Hero banner (Future in motion gibi) -->
+          <!-- Hero banner -->
           <section
             class="mb-6 rounded-lg overflow-hidden bg-black text-white flex items-center"
           >
@@ -122,7 +130,10 @@ function goCategory(id) {
             </div>
 
             <!-- Ürün kartları -->
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+            <div
+              v-if="bestSelling.length"
+              class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"
+            >
               <div
                 v-for="product in bestSelling"
                 :key="product.id"
@@ -135,18 +146,31 @@ function goCategory(id) {
                     class="w-full h-full object-contain"
                   />
                 </div>
+
                 <p class="text-xs text-gray-600 mb-1 line-clamp-2">
                   {{ product.title }}
                 </p>
+
                 <div class="text-sm font-semibold mb-1">
-                  {{ product.priceFormatted }}
+                  {{
+                    typeof product.price === 'number'
+                      ? '$' + product.price.toFixed(2)
+                      : product.price
+                  }}
                 </div>
-                <!-- Rating kısmı sende nasıl tutuluyorsa ona göre düzenle -->
+
                 <div class="text-[11px] text-gray-500">
-                  ★★★★☆ ({{ product.reviewsCount }} reviews)
+                  ★★★★☆
                 </div>
               </div>
             </div>
+
+            <p
+              v-else
+              class="py-10 text-center text-gray-500 text-sm"
+            >
+              No products in this category yet.
+            </p>
           </section>
         </main>
       </div>

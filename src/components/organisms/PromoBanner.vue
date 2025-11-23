@@ -23,13 +23,13 @@
         Not happy with your purchase? It's easy to start a return.
       </p>
 
-      <button
-  class="mt-5 bg-white text-black font-semibold px-5 py-2 rounded-full shadow-sm w-fit"
->
-  Shop Now
-</button>
-
-
+      <!-- 🔵 Shop Now yönlendirme -->
+      <RouterLink
+        to="/category/car-truck-parts"
+        class="mt-5 bg-white text-black font-semibold px-5 py-2 rounded-full shadow-sm w-fit"
+      >
+        Shop Now
+      </RouterLink>
     </div>
   </section>
 </template>

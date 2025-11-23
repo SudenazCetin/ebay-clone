@@ -4,7 +4,7 @@ import HeroSlider from '@/components/organisms/HeroSlider.vue'
 import ProductSlider from '@/components/organisms/ProductSlider.vue'
 import PromoBanner from '@/components/organisms/PromoBanner.vue'
 import PromoBannerTop from '@/components/organisms/PromoBannerTop.vue'
-import { products } from '@/data/products' 
+import { products } from '@/data/products'
 import { products as featuredProducts } from '@/data/products'
 
 const futureCategories = [
@@ -100,9 +100,11 @@ const trendingCategories = [
         <div
           class="flex gap-6 overflow-x-auto md:grid md:grid-cols-4 lg:grid-cols-7 md:overflow-visible"
         >
-          <div
+          <!-- KATEGORİ KARTLARI -->
+          <RouterLink
             v-for="cat in futureCategories"
             :key="cat.id"
+            :to="cat.id === 'laptops' ? '/laptops' : '/'"
             class="flex flex-col items-center gap-2 min-w-[150px]"
           >
             <div
@@ -119,7 +121,7 @@ const trendingCategories = [
             <span class="text-sm font-medium text-center">
               {{ cat.label }}
             </span>
-          </div>
+          </RouterLink>
         </div>
       </section>
 
@@ -156,12 +158,12 @@ const trendingCategories = [
       <!-- FEATURED PRODUCTS SLIDER (Öne Çıkanlar) -->
       <section>
         <ProductSlider
-  title="Öne Çıkanlar"
-  subtitle="Sana özel seçilen ürünler."
-  :products="featuredProducts"
-  :showPromoCard="true"
-  category-id="car-truck-parts"
-/>
+          title="Öne Çıkanlar"
+          subtitle="Sana özel seçilen ürünler."
+          :products="featuredProducts"
+          :showPromoCard="true"
+          category-id="car-truck-parts"
+        />
       </section>
 
       <!-- Üst promo banner -->

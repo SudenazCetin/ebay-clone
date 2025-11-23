@@ -39,6 +39,18 @@ const routes = [
     component: DealDetail,
     props: true,
   },
+  {
+  path: '/category/car-and-truck',
+  name: 'CarAndTruck',
+  component: () => import('@/pages/CategoryPage.vue'),
+}
+,
+  {
+  path: '/returns',
+  name: 'Returns',
+  component: () => import('@/pages/ReturnsPage.vue'),
+}
+,
 
   // Slider’daki “All your faves are here”
   { path: '/faves', name: 'Faves', component: DealsPage },
@@ -81,6 +93,12 @@ const routes = [
   path: '/category/:id',
   name: 'CategoryPage',
   component: () => import('@/pages/CategoryPage.vue')
+}
+,
+{
+  path: '/laptops',
+  name: 'LaptopsCategory',
+  component: () => import('@/pages/LaptopsPage.vue'),
 }
 ,
 {

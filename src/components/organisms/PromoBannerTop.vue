@@ -12,9 +12,8 @@
 
     <!-- Overlay content -->
     <div
-  class="absolute inset-0 flex flex-col justify-center pl-5 text-white max-w-fit"
->
-
+      class="absolute inset-0 flex flex-col justify-center pl-5 text-white max-w-fit"
+    >
       <h2 class="text-4xl font-bold">
         Returns made simple
       </h2>
@@ -23,15 +22,13 @@
         Not happy with your purchase? It's easy to start a return.
       </p>
 
-      <button
-  class="mt-5 bg-white text-black font-semibold px-5 py-2 rounded-full shadow-sm w-fit"
->
-  Learn More
-</button>
-
-
-
-
+      <!-- 🔹 Learn More -> /returns sayfasına gider -->
+      <RouterLink
+        to="/returns"
+        class="mt-5 bg-white text-black font-semibold px-5 py-2 rounded-full shadow-sm w-fit"
+      >
+        Learn More
+      </RouterLink>
     </div>
   </section>
 </template>
