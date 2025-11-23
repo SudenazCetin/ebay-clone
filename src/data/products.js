@@ -3,95 +3,163 @@
 export const products = [
   {
     id: 1,
-    title: 'Apple iPhone 13, 128GB - Unlocked - Refurbished Excellent',
-    price: 314.99,
-    image: 'https://via.placeholder.com/400x300?text=iPhone+13',
+    title: 'Bissell CleanView Pet Slim Corded Vacuum',
+    price: 64.99,
+    image: '/assets/products/today1.jpeg',
     location: 'Istanbul, Turkey',
-    condition: 'Excellent - Refurbished',
-    colorOptions: ['Green', 'Midnight', 'Starlight'],
-    storageOptions: ['128 GB', '256 GB', '512 GB'],
-    quantityAvailable: 6,
+
+    // Detay sayfası için ekstra alanlar:
+    condition: 'Brand New',
+    colorOptions: ['Black'],
+    storageOptions: [],
+    quantityAvailable: 5,
     seller: {
-      name: 'ElectroHub Deals',
+      name: 'HomeCare Store',
       rating: '99.2% positive',
-      feedbackCount: 12450,
+      feedbackCount: 1245,
     },
     images: [
-      'https://via.placeholder.com/600x600?text=iPhone+Front',
-      'https://via.placeholder.com/600x600?text=iPhone+Back',
-      'https://via.placeholder.com/600x600?text=iPhone+Side',
-      'https://via.placeholder.com/600x600?text=iPhone+Box',
+      '/assets/products/today1.jpeg',
     ],
     description:
-      'Professionally refurbished iPhone 13 in excellent cosmetic condition. Fully tested and unlocked to all networks.',
+      'Powerful corded vacuum designed for pet owners. Lightweight body and multi-surface brush roll.',
   },
 
   {
     id: 2,
-    title: 'Gaming Mouse RGB 7200 DPI',
-    price: 19.99,
-    image: 'https://via.placeholder.com/400x300?text=Gaming+Mouse',
+    title: 'DEWALT DWS779R 120V 15A 12" Sliding Compound Saw',
+    price: 349.99,
+    image: '/assets/products/today2.jpeg',
     location: 'Ankara, Turkey',
-    condition: 'Brand New',
-    colorOptions: ['Black'],
+
+    condition: 'Refurbished',
+    colorOptions: ['Yellow/Black'],
     storageOptions: [],
-    quantityAvailable: 15,
+    quantityAvailable: 3,
     seller: {
-      name: 'ProGaming Store',
+      name: 'ProTools TR',
       rating: '98.5% positive',
-      feedbackCount: 5670,
+      feedbackCount: 567,
     },
     images: [
-      'https://via.placeholder.com/600x600?text=Gaming+Mouse+Front',
-      'https://via.placeholder.com/600x600?text=Gaming+Mouse+Side',
+      '/assets/products/today2.jpeg',
     ],
     description:
-      'Ergonomic gaming mouse with customizable RGB lighting and up to 7200 DPI.',
+      'High-precision 12" sliding compound saw, ideal for professional wood cutting and construction projects.',
   },
 
   {
     id: 3,
-    title: '4K Action Camera Waterproof',
-    price: 89.5,
-    image: 'https://via.placeholder.com/400x300?text=Action+Camera',
+    title: 'Samsung Galaxy Watch Ultra 47MM LTE',
+    price: 239.99,
+    image: '/assets/products/today3.jpeg',
     location: 'Izmir, Turkey',
-    condition: 'Open Box',
-    colorOptions: ['Black'],
+
+    condition: 'Brand New',
+    colorOptions: ['Black', 'Silver'],
     storageOptions: [],
-    quantityAvailable: 3,
+    quantityAvailable: 8,
     seller: {
-      name: 'OutdoorGear TR',
-      rating: '97.3% positive',
-      feedbackCount: 2300,
+      name: 'TechWorld TR',
+      rating: '97.8% positive',
+      feedbackCount: 2100,
     },
     images: [
-      'https://via.placeholder.com/600x600?text=Action+Cam+Front',
-      'https://via.placeholder.com/600x600?text=Action+Cam+Waterproof',
+      '/assets/products/today3.jpeg',
     ],
     description:
-      '4K UHD action camera with waterproof case and multiple mounting accessories.',
+      'Rugged LTE smartwatch with advanced health tracking, GPS and long-lasting battery.',
   },
 
   {
     id: 4,
-    title: 'Mechanical Keyboard with Blue Switches',
-    price: 54.9,
-    image: 'https://via.placeholder.com/400x300?text=Keyboard',
+    title: 'Sony ULT TOWER 10 Wireless Bluetooth Party Speaker',
+    price: 714.0,
+    image: '/assets/products/today4.jpeg',
     location: 'Bursa, Turkey',
-    condition: 'Brand New',
-    colorOptions: ['Black', 'White'],
+
+    condition: 'Open Box',
+    colorOptions: ['Black'],
     storageOptions: [],
-    quantityAvailable: 10,
+    quantityAvailable: 2,
     seller: {
-      name: 'KeyCaps Studio',
+      name: 'SoundHub Store',
       rating: '99.0% positive',
-      feedbackCount: 4200,
+      feedbackCount: 980,
     },
     images: [
-      'https://via.placeholder.com/600x600?text=Keyboard+Top',
-      'https://via.placeholder.com/600x600?text=Keyboard+Side',
+      '/assets/products/today4.jpeg',
     ],
     description:
-      'Mechanical keyboard with tactile blue switches and RGB backlighting.',
+      'High-power Bluetooth party speaker with deep bass, multi-color lights and wireless streaming.',
+  },
+
+  {
+    id: 5,
+    title: '10K Yellow Gold Cuban Link Chain Necklace',
+    price: 337.95,
+    image: '/assets/products/today5.jpeg',
+    location: 'Antalya, Turkey',
+
+    condition: 'Pre-owned',
+    colorOptions: ['Yellow Gold'],
+    storageOptions: [],
+    quantityAvailable: 1,
+    seller: {
+      name: 'GoldLine Jewelry',
+      rating: '99.6% positive',
+      feedbackCount: 430,
+    },
+    images: [
+      '/assets/products/today5.jpeg',
+    ],
+    description:
+      'Elegant 10K yellow gold Cuban link chain, polished finish, perfect for daily wear or gifting.',
+  },
+
+  {
+    id: 6,
+    title: 'Professional Over-Ear Wireless Headphones',
+    price: 129.99,
+    image: '/assets/products/today6.jpeg',
+    location: 'Konya, Turkey',
+
+    condition: 'Brand New',
+    colorOptions: ['Black'],
+    storageOptions: [],
+    quantityAvailable: 12,
+    seller: {
+      name: 'AudioPro TR',
+      rating: '98.9% positive',
+      feedbackCount: 1600,
+    },
+    images: [
+      '/assets/products/today6.jpeg',
+    ],
+    description:
+      'Noise-isolating wireless headphones with long battery life and comfortable over-ear design.',
+  },
+
+  {
+    id: 7,
+    title: 'Kitchen Stand Mixer with Stainless Steel Bowl',
+    price: 189.5,
+    image: '/assets/products/today7.jpeg',
+    location: 'Kayseri, Turkey',
+
+    condition: 'Brand New',
+    colorOptions: ['Red', 'White'],
+    storageOptions: [],
+    quantityAvailable: 4,
+    seller: {
+      name: 'KitchenMaster',
+      rating: '97.3% positive',
+      feedbackCount: 780,
+    },
+    images: [
+      '/assets/products/today7.jpeg',
+    ],
+    description:
+      'Multi-speed stand mixer with stainless steel bowl, ideal for baking and home cooking.',
   },
 ]

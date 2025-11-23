@@ -10,12 +10,21 @@ import Register from '@/pages/Register.vue'
 import Collectibles from '@/pages/Collectibles.vue'
 import DealsPage from '@/pages/DealsPage.vue'
 import DealDetail from '@/pages/DealDetail.vue'
-
+import Category from '@/pages/Category.vue'
+import ProductPage from '@/pages/ProductPage.vue'
+import ProductDetail from '@/pages/ProductDetail.vue'
 const routes = [
   { path: '/', name: 'Home', component: Home },
-  { path: '/product', name: 'Product', component: Product },
+
+  // Ürün detayı
+  { path: '/product/:id', name: 'Product', component: ProductPage, props: true },
+
+  // Sepet vs
   { path: '/cart', name: 'Cart', component: Cart },
   { path: '/search', name: 'Search', component: Search },
+
+  // Kategori sayfası (Laptops, Computer parts vb.)
+  { path: '/category/:slug', name: 'Category', component: Category, props: true },
 
   // Collectibles sayfası
   { path: '/collectibles', name: 'Collectibles', component: Collectibles },
@@ -34,10 +43,10 @@ const routes = [
   // Slider’daki “All your faves are here”
   { path: '/faves', name: 'Faves', component: DealsPage },
 
-  // “Sell to the world from Turkey”
+  // “Sell to the world from Turkey” (şimdilik Home)
   { path: '/sell', name: 'Sell', component: Home },
 
-  // 🔹 My eBay yolları (şimdilik hepsi Home)
+  // My eBay rotaları (hepsi şimdilik Home’a gidiyor)
   { path: '/my-ebay/summary',          name: 'MyEbaySummary',          component: Home },
   { path: '/my-ebay/recently-viewed',  name: 'MyEbayRecentlyViewed',   component: Home },
   { path: '/my-ebay/bids-offers',      name: 'MyEbayBidsOffers',       component: Home },
@@ -55,20 +64,29 @@ const routes = [
   { path: '/my-ebay/messages',         name: 'MyEbayMessages',         component: Home },
   { path: '/my-ebay/psa-vault',        name: 'MyEbayPsaVault',         component: Home },
 
-  // Login sayfası
+  // Login & Register
   {
     path: '/login',
     name: 'Login',
     component: Login,
     meta: { hideChrome: true },
   },
-
-  // Register sayfası
   {
     path: '/register',
     name: 'Register',
     component: Register,
     meta: { hideChrome: true },
+  },
+  {
+  path: '/category/:id',
+  name: 'CategoryPage',
+  component: () => import('@/pages/CategoryPage.vue')
+}
+,
+{
+    path: '/product/:id',
+    name: 'ProductDetail',
+    component: ProductDetail,
   },
 ]
 

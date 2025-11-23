@@ -1,6 +1,6 @@
-<!-- src/components/organisms/HeaderBar.vue -->
 <script setup>
 import { RouterLink } from 'vue-router'
+import { totalCount } from '@/stores/cartStore'
 import SearchBar from '@/components/molecules/SearchBar.vue'
 import Logo from '@/components/atoms/Logo.vue'
 import MyEbayMenu from '@/components/molecules/MyEbayMenu.vue'
@@ -8,7 +8,11 @@ import MyEbayMenu from '@/components/molecules/MyEbayMenu.vue'
 function handleSearch(payload) {
   console.log('search from header:', payload.query, 'cat:', payload.category)
 }
+
+// 🔵 Sepet adedi (store’dan gelen computed)
+const cartCount = totalCount
 </script>
+
 
 <template>
   <header class="w-full bg-white">
@@ -71,16 +75,28 @@ function handleSearch(payload) {
               </svg>
             </button>
 
-            <!-- Cart (isteğe bağlı, çalışıyordu) -->
+            <!-- 🟦 Cart + Badge -->
             <RouterLink
               to="/cart"
               class="p-2 rounded-full hover:bg-gray-100"
             >
-              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
-                <path
-                  d="M3 3h2l.4 2M7 13h10l3-7H6.4M7 13l-2 9h14l-2-9M9 22a1 1 0 110-2 1 1 0 010 2zm6 0a1 1 0 110-2 1 1 0 010 2z"
-                />
-              </svg>
+              <div class="relative">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M3 3h2l.4 2M7 13h10l3-7H6.4M7 13l-2 9h14l-2-9M9 22a1 1 0 110-2 1 1 0 010 2zm6 0a1 1 0 110-2 1 1 0 010 2z"
+                  />
+                </svg>
+
+                <!-- sadece sepet doluyken göster -->
+                <span
+                  v-if="cartCount > 0"
+                  class="absolute -top-1 -right-1 min-w-[16px] h-[16px]
+                         px-1 rounded-full bg-red-600 text-white text-[10px]
+                         flex items-center justify-center"
+                >
+                  {{ cartCount }}
+                </span>
+              </div>
             </RouterLink>
           </div>
         </div>

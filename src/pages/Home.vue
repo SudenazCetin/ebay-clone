@@ -3,8 +3,9 @@
 import HeroSlider from '@/components/organisms/HeroSlider.vue'
 import ProductSlider from '@/components/organisms/ProductSlider.vue'
 import PromoBanner from '@/components/organisms/PromoBanner.vue'
-
 import PromoBannerTop from '@/components/organisms/PromoBannerTop.vue'
+import { products } from '@/data/products' 
+import { products as featuredProducts } from '@/data/products'
 
 const futureCategories = [
   {
@@ -81,58 +82,6 @@ const trendingCategories = [
     image: '/assets/trending/trend7.jpg',
   },
 ]
-
-const products = [
-  {
-    id: 1,
-    title: 'Bissell CleanView Pet Slim Corded Vacuum',
-    price: 64.99,
-    location: 'Istanbul, Turkey',
-    image: '/assets/products/today1.jpeg',
-  },
-  {
-    id: 2,
-    title: 'DEWALT DWS779R 120V 15A 12\" Sliding Compound Saw',
-    price: 349.99,
-    location: 'Ankara, Turkey',
-    image: '/assets/products/today2.jpeg',
-  },
-  {
-    id: 3,
-    title: 'Samsung Galaxy Watch Ultra 47MM LTE',
-    price: 239.99,
-    location: 'Izmir, Turkey',
-    image: '/assets/products/today3.jpeg',
-  },
-  {
-    id: 4,
-    title: 'Sony ULT TOWER 10 Wireless Bluetooth Party Speaker',
-    price: 714.0,
-    location: 'Bursa, Turkey',
-    image: '/assets/products/today4.jpeg',
-  },
-  {
-    id: 5,
-    title: '10K Yellow Gold Cuban Link Chain Necklace',
-    price: 337.95,
-    location: 'Antalya, Turkey',
-    image: '/assets/products/today5.jpeg',
-  },
-  {
-    id: 6,
-    title: 'Professional Over-Ear Wireless Headphones',
-    price: 129.99,
-    location: 'Konya, Turkey',
-    image: '/assets/products/today6.jpeg',
-  },
-  {
-    id: 7,
-    title: 'Kitchen Stand Mixer with Stainless Steel Bowl',
-    price: 189.5,
-    location: 'Kayseri, Turkey',
-    image: '/assets/products/today7.jpeg',
-  },
-]
 </script>
 
 <template>
@@ -203,24 +152,27 @@ const products = [
           </div>
         </div>
       </section>
-      <section>
-  
-
 
       <!-- FEATURED PRODUCTS SLIDER (Öne Çıkanlar) -->
       <section>
         <ProductSlider
-          title="Öne Çıkanlar"
-          subtitle="Sana özel seçilen ürünler."
-          :products="products"
-        />
+  title="Öne Çıkanlar"
+  subtitle="Sana özel seçilen ürünler."
+  :products="featuredProducts"
+  :showPromoCard="true"
+  category-id="car-truck-parts"
+/>
       </section>
-      <PromoBannerTop />
-</section>
-<section>
-  <PromoBanner />
-</section>
 
+      <!-- Üst promo banner -->
+      <section>
+        <PromoBannerTop />
+      </section>
+
+      <!-- Alt promo banner -->
+      <section>
+        <PromoBanner />
+      </section>
     </div>
   </div>
 </template>

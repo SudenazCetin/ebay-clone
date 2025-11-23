@@ -1,122 +1,149 @@
 <!-- src/pages/Cart.vue -->
 <script setup>
-import { ref } from 'vue'
+import { computed } from 'vue'
+import { useRouter } from 'vue-router'
+import {
+  cartItems,
+  changeQuantity,
+  removeFromCart,
+  clearCart
+} from '@/stores/cartStore'
+import BaseButton from '@/components/atoms/BaseButton.vue'
 
-/* DEMO ürün – sonra backend veya localStorage ile doldurabiliriz */
-const items = ref([
-  {
-    id: 1,
-    title: "96GB (12x8GB) MEMORY FOR DELL POWEREDGE R610 R710 R715 R720 R815 R510 T410 T610",
-    img: "https://i.ebayimg.com/images/g/dQMAAOSwA8lkwD1I/s-l1600.jpg",
-    seller: "Tech Dealers Store",
-    feedback: 98.9,
-    qty: 1,
-    price: 129.99,
-    shipping: 31.26
-  }
-])
+const router = useRouter()
+
+// cartItems zaten reactive olduğu için kopya değil direkt referans
+const items = cartItems
+
+// Toplam adet
+const totalCount = computed(() =>
+  items.reduce((sum, item) => sum + item.quantity, 0)
+)
+
+// Toplam fiyat
+const totalPrice = computed(() =>
+  items.reduce((sum, item) => sum + item.price * item.quantity, 0)
+)
+
+const goToHome = () => {
+  router.push({ name: 'Home' })
+}
 </script>
 
 <template>
-  <div class="max-w-[1200px] mx-auto px-4 py-6">
+  <div class="max-w-5xl mx-auto px-4 py-8">
+    <h1 class="text-2xl font-semibold mb-6">
+      Shopping cart
+    </h1>
 
-    <!-- 🔵 SIGNED OUT ALERT -->
-    <div class="bg-blue-600 text-white p-4 rounded-md mb-6 text-sm">
-      You're signed out right now.  
-      To save these items or see previously saved items, 
-      <RouterLink to="/login" class="underline font-medium">sign in.</RouterLink>
+    <!-- SEPET BOŞSA -->
+    <div v-if="items.length === 0" class="text-center py-16">
+      <p class="text-lg font-medium mb-4">
+        Your cart is empty.
+      </p>
+      <p class="text-sm text-gray-600 mb-6">
+        Add items to your cart to see them here.
+      </p>
+      <BaseButton
+        class="bg-[#3665F3] text-white rounded-full h-10 px-6 text-sm hover:brightness-110"
+        @click="goToHome"
+      >
+        Start shopping
+      </BaseButton>
     </div>
 
-    <h1 class="text-3xl font-semibold mb-6">Shopping cart</h1>
-
-    <div class="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-6">
-
-      <!-- 🔵 SOL TARAF - ÜRÜNLER -->
+    <!-- SEPETTE ÜRÜN VARSA -->
+    <div v-else class="space-y-6">
       <div class="space-y-4">
-
         <div
           v-for="item in items"
           :key="item.id"
-          class="border rounded-lg p-4 flex flex-col md:flex-row gap-5"
+          class="flex gap-4 border-b pb-4"
         >
-          <!-- ÜRÜN FOTO -->
-          <div class="w-full md:w-40 flex justify-center">
-            <img :src="item.img" class="w-32 h-32 object-cover rounded-md border" />
+          <!-- Ürün görseli -->
+          <div class="w-24 h-24 flex-shrink-0 border rounded-md overflow-hidden">
+            <img
+              :src="item.image"
+              :alt="item.title"
+              class="w-full h-full object-cover"
+            />
           </div>
 
-          <!-- ÜRÜN BİLGİLERİ -->
+          <!-- Ürün bilgileri -->
           <div class="flex-1">
-            <!-- Seller + feedback -->
-            <div class="text-sm text-gray-600">
-              <span class="font-semibold text-black">{{ item.seller }}</span>  
-              <span class="ml-1">{{ item.feedback }}% positive feedback</span>
+            <h2 class="text-sm font-semibold mb-1">
+              {{ item.title }}
+            </h2>
+
+            <p class="text-sm text-gray-600 mb-2">
+              Price: US ${{ item.price.toFixed(2) }}
+            </p>
+
+            <!-- Adet kontrol -->
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-xs text-gray-500 mr-2">Quantity:</span>
+
+              <button
+                class="border rounded-full w-7 h-7 flex items-center justify-center text-sm"
+                @click="changeQuantity(item.id, -1)"
+              >
+                -
+              </button>
+
+              <span class="w-8 text-center text-sm">
+                {{ item.quantity }}
+              </span>
+
+              <button
+                class="border rounded-full w-7 h-7 flex items-center justify-center text-sm"
+                @click="changeQuantity(item.id, 1)"
+              >
+                +
+              </button>
             </div>
 
-            <!-- Title -->
-            <RouterLink
-              to="/product"
-              class="block mt-1 text-[15px] font-medium underline hover:text-blue-600"
+            <!-- Ürün kaldırma -->
+            <button
+              class="text-xs text-red-600 hover:underline"
+              @click="removeFromCart(item.id)"
             >
-              {{ item.title }}
-            </RouterLink>
-
-            <!-- New -->
-            <p class="text-sm text-gray-600 mt-1">New</p>
+              Remove
+            </button>
           </div>
 
-          <!-- SAĞ TARAF - QTY + PRICE -->
-          <div class="flex flex-col items-end justify-between">
-            <!-- Qty Dropdown -->
-            <select v-model="item.qty" class="border rounded-md px-2 py-1">
-              <option v-for="n in 10" :value="n" :key="n">{{ n }}</option>
-            </select>
-
-            <!-- Price -->
-            <p class="text-lg font-semibold mt-3">
-              US ${{ (item.price).toFixed(2) }}
+          <!-- Sağda toplam -->
+          <div class="flex flex-col items-end justify-between text-right">
+            <p class="text-sm font-semibold">
+              US ${{ (item.price * item.quantity).toFixed(2) }}
             </p>
-            <p class="text-sm text-gray-600">+ US ${{ item.shipping.toFixed(2) }} shipping</p>
-
-            <!-- Actions -->
-            <div class="text-sm mt-3 flex gap-4">
-              <button class="underline text-gray-700 hover:text-blue-700">Save for later</button>
-              <button class="underline text-gray-700 hover:text-blue-700">Remove</button>
-            </div>
           </div>
         </div>
-
       </div>
 
-      <!-- 🔵 SAĞ TARAF - TOPLAM KISMI -->
-      <div class="border rounded-lg p-5 h-fit sticky top-24">
-        <h2 class="text-xl font-semibold mb-4">Summary</h2>
-
-        <div class="flex justify-between mb-4 text-gray-700">
-          <span>Item ({{ items.length }})</span>
-          <span>US ${{ items[0].price.toFixed(2) }}</span>
+      <!-- Alt toplam -->
+      <div class="border-t pt-4 flex flex-col items-end gap-3">
+        <div class="text-sm text-gray-700">
+          Items: <span class="font-semibold">{{ totalCount }}</span>
         </div>
 
-        <div class="flex justify-between text-gray-700 mb-6">
-          <span>Shipping</span>
-          <span>US ${{ items[0].shipping.toFixed(2) }}</span>
+        <div class="text-lg font-semibold">
+          Subtotal: US ${{ totalPrice.toFixed(2) }}
         </div>
 
-        <div class="flex justify-between font-semibold text-lg mb-6">
-          <span>Subtotal</span>
-          <span>
-            US ${{ (items[0].price + items[0].shipping).toFixed(2) }}
-          </span>
+        <div class="flex gap-3 mt-2">
+          <BaseButton
+            class="border border-gray-300 bg-white rounded-full h-10 px-5 text-sm hover:bg-gray-50"
+            @click="clearCart"
+          >
+            Clear cart
+          </BaseButton>
+
+          <BaseButton
+            class="bg-[#3665F3] text-white rounded-full h-10 px-6 text-sm hover:brightness-110"
+          >
+            Go to checkout
+          </BaseButton>
         </div>
-
-        <button
-          class="w-full bg-[#3665F3] text-white rounded-full py-3 font-semibold text-lg hover:brightness-110"
-        >
-          Go to checkout
-        </button>
-
-        <p class="text-xs text-gray-500 mt-2 text-center">
-          Purchase protected by <span class="underline">eBay Money Back Guarantee</span>
-        </p>
       </div>
     </div>
   </div>

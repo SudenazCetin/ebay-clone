@@ -1,6 +1,7 @@
 <!-- src/components/organisms/ProductSlider.vue -->
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import ProductCard from '@/components/molecules/ProductCard.vue'
 
 const props = defineProps({
@@ -14,10 +15,19 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  // Bu sliderın ait olduğu kategori (ör: "car-truck-parts")
+  categoryId: {
+    type: String,
+    default: '',
+  },
 })
 
+const router = useRouter()
 const scrollRef = ref(null)
 
+const hasCategory = computed(() => !!props.categoryId)
+
+// Slider sağ / sol kaydırma
 const scroll = (direction) => {
   const el = scrollRef.value
   if (!el) return
@@ -26,6 +36,15 @@ const scroll = (direction) => {
   el.scrollBy({
     left: direction === 'next' ? amount : -amount,
     behavior: 'smooth',
+  })
+}
+
+// "See all" ve siyah karttaki "Shop now" tıklanınca kategori sayfasına git
+const goToCategoryPage = () => {
+  if (!props.categoryId) return
+  router.push({
+    name: 'CategoryPage',
+    params: { id: props.categoryId },
   })
 }
 </script>
@@ -41,7 +60,12 @@ const scroll = (direction) => {
         </p>
       </div>
 
-      <button class="text-sm text-blue-600 hover:underline">
+      <!-- See all: kategori Id varsa tıklanabilir -->
+      <button
+        class="text-sm text-blue-600 hover:underline disabled:text-gray-400 disabled:cursor-default"
+        :disabled="!hasCategory"
+        @click="goToCategoryPage"
+      >
         See all
       </button>
     </div>
@@ -87,7 +111,10 @@ const scroll = (direction) => {
 
           <button
             class="mt-6 inline-flex items-center justify-center px-5 py-2
-                   rounded-full bg-white text-black text-sm font-semibold"
+                   rounded-full bg-white text-black text-sm font-semibold
+                   disabled:bg-gray-200 disabled:text-gray-500"
+            :disabled="!hasCategory"
+            @click="goToCategoryPage"
           >
             Shop now
           </button>
